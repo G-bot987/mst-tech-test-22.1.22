@@ -3,20 +3,17 @@ import socketIOClient from "socket.io-client";
 const ENDPOINT = "https://mst-full-stack-dev-test.herokuapp.com/";
 
 function App() {
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState("loading");
+  const socket = socketIOClient(ENDPOINT);
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
     socket.on("data-update", (data) => {
+      console.log(data);
       setResponse(data);
     });
   }, []);
 
-  return (
-    <p>
-      It's <time Match={response}>{response}</time>
-    </p>
-  );
+  return <p>{JSON.stringify(response)}</p>;
 }
 
 export default App;
